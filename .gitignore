@@ -1,0 +1,52 @@
+# =========================
+# React Native / Expo
+# =========================
+node_modules/
+.expo/
+dist/
+web-build/
+npm-debug.*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Python / Flask / ML
+# =========================
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Flask specific
+instance/
+*.sqlite3
+
+# =========================
+# Environment variables
+# =========================
+.env
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+
+# =========================
+# Mobile certificates / keys
+# =========================
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# =========================
+# Misc
+# =========================
+*.log
+*.orig.*
