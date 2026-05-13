@@ -16,12 +16,11 @@ const classes = ['Black-grass', 'Charlock', 'Cleavers', 'Common Chickweed', 'Com
 
 const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
   const router = useRouter();
-  const [activeJobType, setActiveJobType] = useState("Black-grass");
+  const [activeSpecies, setActiveSpecies] = useState("Black-grass");
 
   return (
     <View>
       <View style={styles.container}>
-        <Text style={styles.userName}>Hello Ahmed</Text>
         <Text style={styles.welcomeMessage}>Check our Plant seedling classification</Text>
       </View>
 
@@ -49,13 +48,13 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
           data={classes}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={styles.tab(activeJobType, item)}
+              style={styles.tab(activeSpecies, item)}
               onPress={() => {
-                setActiveJobType(item);
+                setActiveSpecies(item);
                 router.push(`/search/${item}`);
               }}
             >
-              <Text style={styles.tabText(activeJobType, item)}>{item}</Text>
+              <Text style={styles.tabText(activeSpecies, item)}>{item}</Text>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item}

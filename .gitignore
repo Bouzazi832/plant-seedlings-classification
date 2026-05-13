@@ -23,6 +23,7 @@ __pycache__/
 # Flask specific
 instance/
 *.sqlite3
+plant-seedling-classification/static/uploads/
 
 # =========================
 # Environment variables
@@ -35,6 +36,7 @@ instance/
 .DS_Store
 Thumbs.db
 .vscode/
+.idea/
 
 # =========================
 # Mobile certificates / keys

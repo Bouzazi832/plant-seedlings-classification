@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { Stack, useRouter } from "expo-router";
-import { COLORS, icons, images, SIZES } from "../constants";
+import { Stack, useRouter, useFocusEffect } from "expo-router";
+import { COLORS, icons, SIZES } from "../constants";
 import {
-  Nearbyjobs,
-  Popularjobs,
+  AllPlants,
+  PredictButton,
   ScreenHeaderBtn,
   Welcome,
 } from "../components";
 
 const Home = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Refresh AllPlants every time the home screen gains focus
+  // (e.g., after returning from PredictPage with a new classification)
+  useFocusEffect(
+    useCallback(() => {
+      setRefreshKey((prev) => prev + 1);
+    }, [])
+  );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -19,13 +28,7 @@ const Home = () => {
         options={{
           headerStyle: { backgroundColor: COLORS.lightWhite },
           headerShadowVisible: false,
-          headerLeft: () => (
-            <ScreenHeaderBtn iconUrl={icons.menu} dimension='60%' />
-          ),
-          headerRight: () => (
-            <ScreenHeaderBtn iconUrl={images.profile} dimension='100%' />
-          ),
-          headerTitle: "",
+          headerTitle: "🌱 Plant Seedlings",
         }}
       />
 
@@ -41,13 +44,13 @@ const Home = () => {
             setSearchTerm={setSearchTerm}
             handleClick={() => {
               if (searchTerm) {
-                router.push(`/search/${searchTerm}`)
+                router.push(`/search/${searchTerm}`);
               }
             }}
           />
 
-          <Popularjobs />
-          <Nearbyjobs />
+          <PredictButton />
+          <AllPlants refreshKey={refreshKey} />
         </View>
       </ScrollView>
     </SafeAreaView>

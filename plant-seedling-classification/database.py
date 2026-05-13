@@ -32,9 +32,9 @@ def init_db():
             """
             cursor.execute(sql)
             connection.commit()
-            print(f"✓ Database '{DB_NAME}' and table 'classifications' are ready.")
+            print(f"[OK] Database '{DB_NAME}' and table 'classifications' are ready.")
     except Exception as e:
-        print(f"✗ Error during database initialization: {e}")
+        print(f"[ERROR] Error during database initialization: {e}")
     finally:
         if 'connection' in locals() and connection:
             connection.close()

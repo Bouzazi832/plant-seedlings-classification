@@ -4,11 +4,11 @@ import { Stack, useRouter, useSearchParams } from 'expo-router'
 import { Text, SafeAreaView } from 'react-native'
 import axios from 'axios'
 
-import { ScreenHeaderBtn, NearbyJobCard } from '../../components'
-import { COLORS, icons, SIZES } from '../../constants'
+import { ScreenHeaderBtn, PlantCard } from '../../components'
+import { COLORS, icons, SIZES, API_BASE_URL } from '../../constants'
 import styles from '../../styles/search'
-const API_BASE_URL = "http://192.168.43.50:5000";
-const JobSearch = () => {
+
+const PlantSearch = () => {
     const params = useSearchParams();
     const router = useRouter()
 
@@ -27,7 +27,6 @@ const JobSearch = () => {
                 url: `${API_BASE_URL}/getAllImagesByClassification`,
                 headers: {
                     "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "69420",
                   },
                 params: {
                     query: params.id,
@@ -35,7 +34,6 @@ const JobSearch = () => {
             };
 
             const response = await axios.request(options);
-            console.log(response.data);
             setSearchResult(response.data);
         } catch (error) {
             setSearchError(error);
@@ -79,9 +77,9 @@ const JobSearch = () => {
             <FlatList
                 data={searchResult}
                 renderItem={({ item }) => (
-                    <NearbyJobCard
+                    <PlantCard
                         item={item}
-                        handleNavigate={() => router.push(`/job-details/${item.filename}`)}
+                        handleNavigate={() => router.push(`/details/${item.filename}`)}
                     />
                 )}
                 keyExtractor={(item) => item.filename}
@@ -90,7 +88,7 @@ const JobSearch = () => {
                     <>
                         <View style={styles.container}>
                             <Text style={styles.searchTitle}>{params.id}</Text>
-                            <Text style={styles.noOfSearchedJobs}>All {params.id} plants</Text>
+                            <Text style={styles.noOfSearchedPlants}>All {params.id} plants</Text>
                         </View>
                         <View style={styles.loaderContainer}>
                             {searchLoader ? (
@@ -133,4 +131,4 @@ const JobSearch = () => {
     )
 }
 
-export default JobSearch
+export default PlantSearch

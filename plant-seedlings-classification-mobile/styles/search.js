@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         fontSize: SIZES.xLarge,
         color: COLORS.primary,
     },
-    noOfSearchedJobs: {
+    noOfSearchedPlants: {
         marginTop: 2,
         fontFamily: FONT.medium,
         fontSize: SIZES.small,

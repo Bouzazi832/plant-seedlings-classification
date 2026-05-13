@@ -10,47 +10,32 @@ import {
 } from "react-native";
 
 import {
-  Company,
-  JobAbout,
-  JobFooter,
-  JobTabs,
+  PlantInfo,
+  PlantAbout,
+  PlantFooter,
+  PlantTabs,
   ScreenHeaderBtn,
   Specifics,
 } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
 import useFetch from "../../hook/useFetch";
 
-const tabs = ["Plants Classifications"];
+const tabs = ["Plant Classification"];
 
-const JobDetails = () => {
+const PlantDetails = () => {
   const params = useSearchParams();
   const router = useRouter();
 
-  const { data, isLoading, error, refetch } = useFetch("getOneImage", {
-    filename: params.filename,
-  });
+  const { data, isLoading, error, refetch } = useFetch(`getOneImage/${params.id}`, {});
 
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    refetch()
-    setRefreshing(false)
+    refetch();
+    setRefreshing(false);
   }, []);
-
-
-  const displayTabContent = () => {
-    switch (activeTab) {
-      
-      case "About":
-        return (
-          <JobAbout/>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -62,39 +47,40 @@ const JobDetails = () => {
           headerLeft: () => (
             <ScreenHeaderBtn
               iconUrl={icons.left}
-              dimension='60%'
+              dimension="60%"
               handlePress={() => router.back()}
             />
-          ),
-          headerRight: () => (
-            <ScreenHeaderBtn iconUrl={icons.share} dimension='60%' />
           ),
           headerTitle: "",
         }}
       />
 
       <>
-        <ScrollView showsVerticalScrollIndicator={false}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           {isLoading ? (
-            <ActivityIndicator size='large' color={COLORS.primary} />
+            <ActivityIndicator size="large" color={COLORS.primary} />
           ) : error ? (
             <Text>Something went wrong</Text>
-          ) : data.length === 0 ? (
+          ) : !data ? (
             <Text>No data available</Text>
           ) : (
             <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-              
-              {displayTabContent()}
+              <PlantInfo
+                plantImage={data.image}
+                plantName={data.filename}
+                classification={data.classification}
+              />
             </View>
           )}
         </ScrollView>
-
       </>
     </SafeAreaView>
   );
 };
 
-export default JobDetails;
+export default PlantDetails;

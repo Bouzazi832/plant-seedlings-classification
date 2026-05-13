@@ -56,16 +56,34 @@ def preprocess_image(img_array):
 def get_all_images_with_classification():
     db_conn = None
     try:
+        # Pagination params
+        try:
+            page = max(1, int(request.args.get('page', 1)))
+            per_page = max(1, min(100, int(request.args.get('per_page', 10))))
+        except (ValueError, TypeError):
+            page = 1
+            per_page = 10
+
         db_conn = get_db_connection()
         with db_conn.cursor() as cursor:
-            sql = "SELECT filename, classification FROM classifications"
-            cursor.execute(sql)
+            # Count total records
+            cursor.execute("SELECT COUNT(*) as total FROM classifications")
+            total = cursor.fetchone()['total']
+
+            # Fetch paginated records ordered by newest first
+            offset = (page - 1) * per_page
+            sql = ("SELECT filename, classification, created_at "
+                   "FROM classifications "
+                   "ORDER BY created_at DESC "
+                   "LIMIT %s OFFSET %s")
+            cursor.execute(sql, (per_page, offset))
             images_data = cursor.fetchall()
-            
+
             images = []
             for data in images_data:
                 filename = data['filename']
                 classification = data['classification']
+                created_at = data['created_at'].isoformat() if data['created_at'] else None
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
                 if os.path.isfile(file_path):
@@ -75,12 +93,19 @@ def get_all_images_with_classification():
                     image_info = {
                         'filename': filename,
                         'classification': classification,
+                        'created_at': created_at,
                         'image': encoded_image,
                     }
-
                     images.append(image_info)
 
-            return jsonify({'images': images})
+            total_pages = max(1, (total + per_page - 1) // per_page)
+            return jsonify({
+                'images': images,
+                'total': total,
+                'page': page,
+                'per_page': per_page,
+                'total_pages': total_pages,
+            })
 
     except Exception as e:
         print("Error getting all images from the database:", e)
