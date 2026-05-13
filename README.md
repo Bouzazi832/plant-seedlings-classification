@@ -56,21 +56,21 @@ The central command center. Users can search for plants, browse categories, or s
 - **Feature**: Real-time auto-refresh after new predictions.
 - **UI**: Premium cards with image previews and classification labels.
 
-![Home Screen](./plant-seedlings-classification-mobile/screenshots/Screenshot_2026-05-13-18-20-27-072_host.exp.exponent.jpg)
+<img src="./plant-seedlings-classification-mobile/screenshots/Screenshot_2026-05-13-18-20-27-072_host.exp.exponent.jpg" width="300">
 
 #### **2. Plant Classification (Predict Page)**
 The primary tool for identification.
 - **Feature**: Gallery selection and one-tap classification.
 - **UI**: Styled result cards with species identification emoji.
 
-![Predict Page](./plant-seedlings-classification-mobile/screenshots/Screenshot_2026-05-13-18-19-49-700_host.exp.exponent.jpg)
+<img src="./plant-seedlings-classification-mobile/screenshots/Screenshot_2026-05-13-18-19-49-700_host.exp.exponent.jpg" width="300">
 
 #### **3. Search & Filter**
 Dedicated view for exploring specific species.
 - **Feature**: Category-based filtering from the home screen leads here.
 - **UI**: Clean list view with navigation back to dashboard.
 
-![Search Results](./plant-seedlings-classification-mobile/screenshots/Screenshot_2026-05-13-18-20-15-267_host.exp.exponent.jpg)
+<img src="./plant-seedlings-classification-mobile/screenshots/Screenshot_2026-05-13-18-20-15-267_host.exp.exponent.jpg" width="300">
 
 ---
 
@@ -105,4 +105,3 @@ adb reverse tcp:5000 tcp:5000
 
 ## ✍️ Author
 **Ahmed Bouzazi**
-- [GitHub](https://github.com/Bouzazi832)
